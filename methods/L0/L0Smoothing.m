@@ -39,7 +39,6 @@ betamax = 1e5;
 fx = [1, -1];
 fy = [1; -1];
 [N,M,D] = size(Im);
-size(Im)
 sizeI2D = [N,M];
 otfFx = psf2otf(fx,sizeI2D); %计算偏导函数的fft2
 otfFy = psf2otf(fy,sizeI2D);
