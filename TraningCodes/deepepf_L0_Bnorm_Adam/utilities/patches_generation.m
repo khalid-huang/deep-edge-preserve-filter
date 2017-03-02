@@ -2,14 +2,14 @@ function [inputs, labels, set] = patches_generation(size_input,size_label,stride
 
 %size_input = 200;
 %size_label = 200;
-%padding = abs(size_input- size_input) / 2;
+padding = abs(size_input- size_input) / 2;
 %stride = 80;
 
 %% get all the picture's path
 ext          = {'*.jpg', '*.png', '*.bmp'};
 filepaths    = [];
-for i = 1: length(ext):
-  filepaths = cat(1,filepaths, dir(fullfile(folder, ext(i))));
+for i = 1 : length(ext)
+    filepaths = cat(1,filepaths, dir(fullfile(folder, ext{i})));
 end
 
 %% init all the data
@@ -17,31 +17,32 @@ count = 0;
 inputs  = zeros(size_input, size_input, 1, 1,'single');
 labels  = zeros(size_label, size_label, 1, 1,'single');
 
-image = imread('test.jpg');
-image_label = L0Smoothing(image);
-if size(image, 3) == 3
-  image = rgb2gray(image); %uint8
-  image_label = rgb2gray(image_label); %uint8
-end
+for i = 1 : length(filepaths)
+  %image = imread('test.jpg');
+  image = imread(fullfile(folder, filepaths(i).name));
+  image_label = L0Smoothing(image);
+  if size(image, 3) == 3
+    image = rgb2gray(image); %uint8
+    image_label = rgb2gray(image_label); %uint8
+  end
 
-%%augmentation data and Generate patches
-for j = 1:8
-    image_aug = data_augmentation(image, j);  % augment data
-    image_label_aug  = data_augmentation(image_label, j);
-    im_input = im2single(image_aug); % single
-    im_label = im2single(image_label_aug);
-    [hei,wid] = size(im_label);
-    wid
-    for x = 1 : stride : (hei-size_input+1)
-        for y = 1 :stride : (wid-size_input+1)
-            y+size_input-1
-            subim_input = im_input(x : x+size_input-1, y : y+size_input-1);
-            subim_label = im_label(x+padding : x+padding+size_label-1, y+padding : y+padding+size_label-1);
-            count       = count+1;
-            inputs(:, :, 1, count) = subim_input;
-            labels(:, :, 1, count) = subim_label;
-        end
-    end
+  %%augmentation data and Generate patches
+  for j = 1:8
+      image_aug = data_augmentation(image, j);  % augment data
+      image_label_aug  = data_augmentation(image_label, j);
+      im_input = im2single(image_aug); % single
+      im_label = im2single(image_label_aug);
+      [hei,wid] = size(im_label);
+      for x = 1 : stride : (hei-size_input+1)
+          for y = 1 :stride : (wid-size_input+1)
+              subim_input = im_input(x : x+size_input-1, y : y+size_input-1);
+              subim_label = im_label(x+padding : x+padding+size_label-1, y+padding : y+padding+size_label-1);
+              count       = count+1;
+              inputs(:, :, 1, count) = subim_input;
+              labels(:, :, 1, count) = subim_label;
+          end
+      end
+  end
 end
 
 %%show some
