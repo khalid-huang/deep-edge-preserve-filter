@@ -1,0 +1,1 @@
+１）数据来源是BSDS500; train里面的400个图片是来源于test+train; Val里面的是来源valit
