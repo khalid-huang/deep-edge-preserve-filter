@@ -5,7 +5,7 @@ function [inputs, labels, set] = patches_generation(size_input,size_label,stride
 padding = abs(size_input- size_input) / 2;
 %stride = 80;
 
-%% get all the picture's path
+%% get all the picture path
 ext          = {'*.jpg', '*.png', '*.bmp'};
 filepaths    = [];
 for i = 1 : length(ext)
