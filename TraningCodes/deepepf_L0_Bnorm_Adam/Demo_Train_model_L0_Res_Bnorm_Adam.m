@@ -8,7 +8,7 @@
 %%%-------------------------------------------------------------------------
 opts.modelName        = 'model_L0_Res_Bnorm_Adam'; %%% model name
 %opts.learningRate    = [logspace(-3,-3,30) logspace(-4,-4,20)];%%% you can change the learning rate
-opts.learningRate     = [logspace(-3,-3,10) logspace(-4,-4,10)];
+opts.learningRate     = [logspace(-3,-3,3) logspace(-4,-4,3)];
 opts.batchSize        = 128; %%% default
 opts.gpus             = [1]; %%% this code can only support one GPU!
 
