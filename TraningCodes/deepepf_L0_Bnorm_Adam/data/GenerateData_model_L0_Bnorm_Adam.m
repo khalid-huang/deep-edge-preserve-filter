@@ -11,8 +11,8 @@ max_numPatches = batchSize*2000;
 modelName      = 'model_L0_Res_Bnorm_Adam';
 
 %%% training and testing
-folder_train  = 'Train400';  %%% training
-folder_test   = 'Test/Set68';%%% testing
+folder_train  = 'Train';  %%% training
+folder_test   = 'Test';%%% testing
 size_input    = 40;          %%% training
 size_label    = 40;          %%% testing
 stride_train  = 40;          %%% training
