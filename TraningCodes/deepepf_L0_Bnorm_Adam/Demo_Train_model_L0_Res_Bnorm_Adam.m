@@ -14,9 +14,8 @@ DnCNN_init_model_L0_Res_Bnorm_Adam(color_model);
 
 %% generate data to train and val
 if exist('./data/model_L0_Res_Bnorm_Adam/imdb.mat', 'file') == 0:
-  GenerateData_model_L0_Res_Bnorm_Adam(color_model)
+  GenerateData_model_L0_Res_Bnorm_Adam(color_model);
 end
-
 %%% training data first.
 
 

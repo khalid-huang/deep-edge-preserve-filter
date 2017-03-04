@@ -41,20 +41,3 @@ if mode == 8 % rotation 270 & flipped
     image = flipud(image);
     return;
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
