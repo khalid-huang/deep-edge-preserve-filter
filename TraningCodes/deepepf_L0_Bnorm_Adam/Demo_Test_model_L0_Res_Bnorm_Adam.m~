@@ -49,14 +49,13 @@ SSIMs = zeros(1,length(filePaths));
 for i = 1:length(filePaths)
     
     %%% read images
-    %image = imread(fullfile(folderTest,filePaths(i).name));
+    image = imread(fullfile(folderTest,filePaths(i).name));
 
-    input = imread(fullfile(folderTest, filePaths(i).name));
+    input = im2double(imread(fullfile(folde)));
+
     label = L0Smoothing(imread(fullfile(folderTest,filePaths(i).name)));
-    
     [~,nameCur,extCur] = fileparts(filePaths(i).name);
     label = im2double(label);
-    input = im2single(input);
     if size(image,3) == 3
         input = rgb2gray(input);
         label = rgb2gray(label);
@@ -78,9 +77,9 @@ for i = 1:length(filePaths)
     %%% calculate PSNR and SSIM
     [PSNRCur, SSIMCur] = Cal_PSNRSSIM(im2uint8(label),im2uint8(output),0,0);
     if showResult
-        imshow(cat(2,im2uint8(label),im2uint8(input),im2uint8(output)));
-        title([filePaths(i).name,'    ',num2str(PSNRCur,'%2.2f'),'dB','    ',num2str(SSIMCur,'%2.4f')])
-        %imshow(cat(2, im2uint8(input), im2uint8(output)))
+        %imshow(cat(2,im2uint8(label),im2uint8(input),im2uint8(output)));
+        %title([filePaths(i).name,'    ',num2str(PSNRCur,'%2.2f'),'dB','    ',num2str(SSIMCur,'%2.4f')])
+        imshow(cat(2, im2uint8(input), im2uint8(output)))
         drawnow;
         pause(pauseTime)
     end

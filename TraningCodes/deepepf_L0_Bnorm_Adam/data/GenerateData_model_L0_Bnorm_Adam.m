@@ -34,5 +34,7 @@ if ~exist(modelName,'file')
 end
 
 %%% save data
+disp('----------------deal data done---------')
+disp('------------saving data----------')
 save(fullfile(modelName,'imdb'), 'inputs','labels','set','-v7.3')
-
+disp('------------save data daon------------')
