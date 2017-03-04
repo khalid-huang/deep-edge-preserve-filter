@@ -1,9 +1,13 @@
-function [inputs, labels, set] = patches_generation(size_input,size_label,stride,folder,mode,max_numPatches,batchSize)
+function [inputs, labels, set] = patches_generation(color_model, size_input,size_label,stride,folder,mode,max_numPatches,batchSize)
 
-%size_input = 200;
-%size_label = 200;
+%% color_model = gray for gray image
+if color_model == 'gray':
+  PG_channel = 1;
+elseif color_model == 'color':
+  PG_channel = 3;
+end
+
 padding = abs(size_input- size_input) / 2;
-%stride = 80;
 
 %% get all the picture path
 ext          = {'*.jpg', '*.png', '*.bmp'};
@@ -14,14 +18,14 @@ end
 
 %% init all the data
 count = 0;
-inputs  = zeros(size_input, size_input, 1, 1,'single');
-labels  = zeros(size_label, size_label, 1, 1,'single');
+inputs  = zeros(size_input, size_input, PG_channel, 1,'single');
+labels  = zeros(size_label, size_label, PG_channel, 1,'single');
 
 for i = 1 : length(filepaths)
   %image = imread('test.jpg');
   image = imread(fullfile(folder, filepaths(i).name));
   image_label = L0Smoothing(image);
-  if size(image, 3) == 3
+  if size(image, 3) == 3 && color_model == 'gray'
     image = rgb2gray(image); %uint8
     image_label = rgb2gray(image_label); %uint8
   end
@@ -32,14 +36,14 @@ for i = 1 : length(filepaths)
       image_label_aug  = data_augmentation(image_label, j);
       im_input = im2single(image_aug); % single
       im_label = im2single(image_label_aug);
-      [hei,wid] = size(im_label);
+      [hei,wid,chl] = size(im_label);
       for x = 1 : stride : (hei-size_input+1)
           for y = 1 :stride : (wid-size_input+1)
-              subim_input = im_input(x : x+size_input-1, y : y+size_input-1);
-              subim_label = im_label(x+padding : x+padding+size_label-1, y+padding : y+padding+size_label-1);
+              subim_input = im_input(x : x+size_input-1, y : y+size_input-1,:);
+              subim_label = im_label(x+padding : x+padding+size_label-1, y+padding : y+padding+size_label-1,:);
               count       = count+1;
-              inputs(:, :, 1, count) = subim_input;
-              labels(:, :, 1, count) = subim_label;
+              inputs(:, :, :, count) = subim_input;
+              labels(:, :, :, count) = subim_label;
           end
       end
   end
@@ -55,10 +59,10 @@ inputs = inputs(:,:,:,1:(size(inputs,4)-mod(size(inputs,4),batchSize)));
 labels = labels(:,:,:,1:(size(labels ,4)-mod(size(labels ,4),batchSize)));
 labels = shave(inputs,[padding,padding])-labels; %%% residual image patches; pay attention to this!!!
 
-%shuffle the data
+%shuffle the data; according the order to shuffle the train data's order;
 order  = randperm(size(inputs,4));
-inputs = inputs(:, :, 1, order);
-labels = labels(:, :, 1, order);
+inputs = inputs(:, :, :, order);
+labels = labels(:, :, :, order);
 
 % distinguish the train data and the test data
 set    = uint8(ones(1,size(inputs,4)));

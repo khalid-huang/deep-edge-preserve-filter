@@ -1,5 +1,22 @@
+function [] = Demo_Train_model_L0_Res_Bnorm_Adam(color_model)
 
-%%% Note: run the 'GenerateData_model_L0_Res_Bnorm_Adam.m' to generate
+%path addpath
+addpath('./data','./data/utilities');
+
+%%color_model: 'color' or 'gray'
+if nargin == 0
+  color_model = 'gray'
+end
+
+%init the net
+DnCNN_init_model_L0_Res_Bnorm_Adam(color_model);
+
+
+%% generate data to train and val
+if exist('./data/model_L0_Res_Bnorm_Adam/imdb.mat', 'file') == 0:
+  GenerateData_model_L0_Res_Bnorm_Adam(color_model)
+end
+
 %%% training data first.
 
 
@@ -29,7 +46,7 @@ net  = feval(['DnCNN_init_',opts.modelName]);
 imdb = load(opts.imdbPath) ;
 
 %%%-------------------------------------------------------------------------
-%%%   Train 
+%%%   Train
 %%%-------------------------------------------------------------------------
 
 [net, info] = DnCNN_train(net, imdb, ...
@@ -40,9 +57,3 @@ imdb = load(opts.imdbPath) ;
     'batchSize', opts.batchSize, ...
     'modelname', opts.modelName, ...
     'gpus',opts.gpus) ;
-
-
-
-
-
-

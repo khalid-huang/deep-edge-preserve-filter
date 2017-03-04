@@ -1,13 +1,13 @@
-
+function [] = GenerateData_model_L0_Res_Bnorm_Adam(color_model)
 %%% Generate the training data.
 
-clear;close all;
+%clear;close all;
 
-addpath(genpath('./.'));
+%addpath(genpath('./.'));
 %addpath utilities;
 
 batchSize      = 128;        %%% batch size
-max_numPatches = batchSize*2000; 
+max_numPatches = batchSize*2000;
 modelName      = 'model_L0_Res_Bnorm_Adam';
 
 %%% training and testing
@@ -21,9 +21,9 @@ val_train     = 0;           %%% training % default
 val_test      = 1;           %%% testing  % default
 
 %%% training patches
-[inputs, labels, set]  = patches_generation(size_input,size_label,stride_train,folder_train,val_train,max_numPatches,batchSize);
+[inputs, labels, set]  = patches_generation(color_model, size_input,size_label,stride_train,folder_train,val_train,max_numPatches,batchSize);
 %%% testing  patches
-[inputs2,labels2,set2] = patches_generation(size_input,size_label,stride_test,folder_test,val_test,max_numPatches,batchSize);
+[inputs2,labels2,set2] = patches_generation(color_model,size_input,size_label,stride_test,folder_test,val_test,max_numPatches,batchSize);
 
 inputs   = cat(4,inputs,inputs2);      clear inputs2;
 labels   = cat(4,labels,labels2);      clear labels2;
