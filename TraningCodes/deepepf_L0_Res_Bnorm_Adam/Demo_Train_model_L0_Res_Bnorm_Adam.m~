@@ -13,6 +13,7 @@ end
 if exist('./data/model_L0_Res_Bnorm_Adam/imdb.mat', 'file') == 0
   GenerateData_model_L0_Res_Bnorm_Adam(color_model)
 end
+
 %%% training data first.
 
 
@@ -36,7 +37,7 @@ opts.imdbPath    = fullfile(opts.expDir, 'imdb.mat');
 %%%   Initialize model and load data
 %%%-------------------------------------------------------------------------
 %%%  model
-net  = feval(['DnCNN_init_',opts.modelName], color_model);
+net  = feval(['DnCNN_init_',opts.modelName], );
 
 %%%  load data
 imdb = load(opts.imdbPath) ;

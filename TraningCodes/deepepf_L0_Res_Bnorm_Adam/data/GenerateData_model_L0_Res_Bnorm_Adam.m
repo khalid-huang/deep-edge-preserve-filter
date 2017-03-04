@@ -3,16 +3,16 @@ function [] = GenerateData_model_L0_Res_Bnorm_Adam(color_model)
 
 %clear;close all;
 
-%addpath(genpath('./.'));
+addpath(genpath('./.'));
 %addpath utilities;
 
 batchSize      = 128;        %%% batch size
 max_numPatches = batchSize*2000;
-modelName      = 'model_L0_Res_Bnorm_Adam';
+modelName      = 'data/model_L0_Res_Bnorm_Adam';
 
 %%% training and testing
-folder_train  = 'Train';  %%% training
-folder_test   = 'Test';%%% testing
+folder_train  = 'data/Train';  %%% training
+folder_test   = 'data/Test';%%% testing
 size_input    = 40;          %%% training
 size_label    = 40;          %%% testing
 stride_train  = 40;          %%% training
@@ -37,4 +37,4 @@ end
 disp('----------------deal data done---------')
 disp('------------saving data----------')
 save(fullfile(modelName,'imdb'), 'inputs','labels','set','-v7.3')
-disp('------------save data daon------------')
+disp('------------save data done------------')
