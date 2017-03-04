@@ -1,11 +1,11 @@
 
-function net = DnCNN_init_model_64_25_Res_Bnorm_Adam(color_model)
+function net = DnCNN_init_model_L0_Res_Bnorm_Adam(color_model)
 
 
 
-if color_model == 'gray'
+if strcmp(color_model, 'gray') == 1
   DI_channel = 1;
-elseif color_model == 'color'
+elseif strcmp(color_model,'color') == 1
   DI_channel = 3;
 end
 

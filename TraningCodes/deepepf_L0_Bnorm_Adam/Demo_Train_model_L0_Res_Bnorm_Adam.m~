@@ -37,7 +37,7 @@ opts.imdbPath    = fullfile(opts.expDir, 'imdb.mat');
 %%%   Initialize model and load data
 %%%-------------------------------------------------------------------------
 %%%  model
-net  = feval(['DnCNN_init_',opts.modelName], color_model);
+net  = feval(['DnCNN_init_',opts.modelName], );
 
 %%%  load data
 imdb = load(opts.imdbPath) ;

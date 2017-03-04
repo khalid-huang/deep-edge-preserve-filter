@@ -1,17 +1,19 @@
 function [inputs, labels, set] = patches_generation(color_model, size_input,size_label,stride,folder,mode,max_numPatches,batchSize)
 
 %% color_model = gray for gray image
-if color_model == 'gray':
+if strcmp(color_model,'gray') == 1
   PG_channel = 1;
-elseif color_model == 'color':
+elseif strcmp(color_model,'color') == 1
   PG_channel = 3;
 end
 
 padding = abs(size_input- size_input) / 2;
 
+pwd
 %% get all the picture path
 ext          = {'*.jpg', '*.png', '*.bmp'};
 filepaths    = [];
+fullfile(folder)
 for i = 1 : length(ext)
     filepaths = cat(1,filepaths, dir(fullfile(folder, ext{i})));
 end
@@ -25,7 +27,7 @@ for i = 1 : length(filepaths)
   %image = imread('test.jpg');
   image = imread(fullfile(folder, filepaths(i).name));
   image_label = L0Smoothing(image);
-  if size(image, 3) == 3 && color_model == 'gray'
+  if size(image, 3) == 3 && strcmp(color_model, 'gray') == 1
     image = rgb2gray(image); %uint8
     image_label = rgb2gray(image_label); %uint8
   end
@@ -49,10 +51,6 @@ for i = 1 : length(filepaths)
   end
 end
 
-%%show some
-%input_one = inputs(:,:,1,50);
-%label_one = labels(:,:,1,50);
-%imshow(cat(2, im2uint8(input_one), im2uint8(label_one)))
 
 %% go on deal with the data according with the bachSize the inputs and the lables must tobe the multiple of the batchSiz and Generate the residual
 inputs = inputs(:,:,:,1:(size(inputs,4)-mod(size(inputs,4),batchSize)));
@@ -63,6 +61,12 @@ labels = shave(inputs,[padding,padding])-labels; %%% residual image patches; pay
 order  = randperm(size(inputs,4));
 inputs = inputs(:, :, :, order);
 labels = labels(:, :, :, order);
+
+%%show some
+input_one = inputs(:,:,:,50);
+label_one = labels(:,:,:,50);
+imshow(cat(2, im2uint8(input_one), im2uint8(label_one)));
+pause(5);
 
 % distinguish the train data and the test data
 set    = uint8(ones(1,size(inputs,4)));
