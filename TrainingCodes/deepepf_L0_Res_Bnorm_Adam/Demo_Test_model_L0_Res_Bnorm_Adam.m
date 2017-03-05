@@ -1,12 +1,12 @@
 %%% test the model performance
-function [] = Demo_Test_model_L0_Re_Bnorm_Adam(color_model)
+function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
 
 
   % clear; clc;
   format compact;
 
   if nargin == 0
-    color_model = 'gray'
+    color_model = 'gray';
   end
 
   addpath(fullfile('data','utilities'));
@@ -14,19 +14,22 @@ function [] = Demo_Test_model_L0_Re_Bnorm_Adam(color_model)
 
   showResult  = 1;
   useGPU      = 1;
-  pauseTime   = 3;
-
-  if strcmp(color_model, 'color')
-    modelDir  = 'data/model_L0_Res_Bnorm_Adam';
+  pauseTime   = 1;
+  
+  %%model_shape is to use for the dir
+  if strcmp(color_model, 'gray')
+    model_dir_shape = 'model_L0_Gray_Res_Bnorm_Adam';
   else
-    modelDir = 'data/model_L0_Gray_Res_Bnorm_Adam';;
+    model_dir_shape = 'model_L0_Res_Bnorm_Adam';
   end
-  modelName   = 'model_L0_Res_Bnorm_Adam';;
+  
+  modelDir  = fullfile('data',model_dir_shape);
+  modelName   = model_dir_shape;
   %epoch      = 1;
   epoch       = findLastEpoch(modelDir, modelName);
 
   %%% load Gaussian denoising model
-  load(fullfile('data',modelName,[modelName,'-epoch-',num2str(epoch),'.mat']));
+  load(fullfile(modelDir,[modelName,'-epoch-',num2str(epoch),'.mat']));
   net = vl_simplenn_tidy(net);
   net.layers = net.layers(1:end-1);
 
@@ -64,7 +67,8 @@ function [] = Demo_Test_model_L0_Re_Bnorm_Adam(color_model)
       [~,nameCur,extCur] = fileparts(filePaths(i).name);
       label = im2double(label);
       input = im2single(input);
-      if strcmp(color_model, 'color') == 1 && size(image,3) == 3
+      if strcmp(color_model, 'gray') == 1 && size(input,3) == 3
+          disp('gray')
           input = rgb2gray(input);
           label = rgb2gray(label);
       end
@@ -99,7 +103,7 @@ function [] = Demo_Test_model_L0_Re_Bnorm_Adam(color_model)
 end
 
 %% get the max epoch net
-function epoch = temp(modelDir, modelName)
+function epoch = findLastEpoch(modelDir, modelName)
   list = dir(fullfile(modelDir,[modelName, '-epoch-*.mat']));
   tokens = regexp({list.name}, [modelName, '-epoch-([\d]+).mat'], 'tokens');
   epoch = cellfun(@(x) sscanf(x{1}{1}, '%d'), tokens);

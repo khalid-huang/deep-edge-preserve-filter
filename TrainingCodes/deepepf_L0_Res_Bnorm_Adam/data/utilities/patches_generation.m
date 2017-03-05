@@ -63,10 +63,11 @@ inputs = inputs(:, :, :, order);
 labels = labels(:, :, :, order);
 
 %%show some
-input_one = inputs(:,:,:,50);
-label_one = labels(:,:,:,50);
+input_one = inputs(:,:,:,5);
+label_one = labels(:,:,:,5);
 imshow(cat(2, im2uint8(input_one), im2uint8(label_one)));
-pause(5);
+drawnow;
+pause(1);
 
 % distinguish the train data and the test data
 set    = uint8(ones(1,size(inputs,4)));

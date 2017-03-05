@@ -27,7 +27,8 @@ end
 %%%-------------------------------------------------------------------------
 opts.modelName        = model_dir_shape; %%% model name
 %opts.learningRate    = [logspace(-3,-3,30) logspace(-4,-4,20)];%%% you can change the learning rate
-opts.learningRate     = [logspace(-3,-3,8) logspace(-4,-4,8)];
+opts.learningRate     = [logspace(-3,-3,15) logspace(-4,-4,15)];
+%opts.learningRate = [logspace(-3,-3,2)];
 opts.batchSize        = 128; %%% default
 opts.gpus             = [1]; %%% this code can only support one GPU!
 
@@ -43,7 +44,8 @@ opts.imdbPath    = fullfile(opts.expDir, 'imdb.mat');
 %%%-------------------------------------------------------------------------
 %%%  model
 disp('init net');
-net  = feval(['DnCNN_init_',opts.modelName], color_model);
+opts.init_net_name = 'model_L0_Res_Bnorm_Adam';
+net  = feval(['DnCNN_init_',opts.init_net_name], color_model);
 disp('init net done');
 
 %%%  load data
