@@ -1,35 +1,22 @@
-%AÎª¸ø¶¨Í¼Ïñ£¬¹éÒ»»¯µ½[0,1]µÄ¾ØÕó
-%wÎªË«±ßÂË²¨Æ÷£¨ºË£©µÄ±ß³¤/2
-%¶¨ÒåÓò·½²î¦Òd¼ÇÎªSIGMA(1),ÖµÓò·½²î¦Òr¼ÇÎªSIGMA(2)
+%%http://www.cnblogs.com/pursuit1996/p/4912189.html
+%filepath is the path of the input image
+% wä¸ºåŒè¾¹æ»¤æ³¢å™¨ï¼ˆæ ¸ï¼‰çš„è¾¹é•¿/2
+% sigmaå®šä¹‰åŸŸæ–¹å·®Ïƒdè®°ä¸ºSIGMA(1),å€¼åŸŸæ–¹å·®Ïƒrè®°ä¸ºSIGMA(2)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function B = bfilter2(A,w,sigma)
-% ¼ìÑé¸ø¶¨Í¼ÏñÊÇ·ñ´æÔÚ²¢ÇÒÓĞĞ§
-if ~exist('A','var') || isempty(A)
-   error('Input image A is undefined or invalid.');
-end
-if ~isfloat(A) || ~sum([1,3] == size(A,3)) || ...
-      min(A(:)) < 0 || max(A(:)) > 1
-   error(['Input image A must be a double precision ',...
-          'matrix of size NxMx1 or NxMx3 on the closed ',...
-          'interval [0,1].']);      
-end
+function B = bfilter(filepath,w,sigma)
+  if nargin == 1
+    w = 5;           % åŒè¾¹æ»¤æ³¢å™¨åŠå®½ï¼Œwè¶Šå¤§å¹³æ»‘ä½œç”¨è¶Šå¼º
+    sigma = [3 0.2]; % ç©ºé—´è·ç¦»æ–¹å·®Ïƒdè®°ä¸ºSIGMA(1),åƒç´ äº®åº¦æ–¹å·®Ïƒrè®°ä¸ºSIGMA(2),å³ç©ºé—´é‚»è¿‘åº¦å› å­å’Œäº®åº¦ç›¸ä¼¼åº¦å› å­çš„è¡°å‡ç¨‹åº¦
+  im = imread(filepath);
+  im = double(im) / 255; % double and normalize
+  w = ceil(w);
 
-% ¼ìÑéË«±ßÂË²¨Æ÷µÄ°ë¿íÊÇ·ñ·ûºÏÒªÇó
-if ~exist('w','var') || isempty(w) || ...
-      numel(w) ~= 1 || w < 1
-   w = 5;
-end
-w = ceil(w);
+  %é€‰æ‹©å½©è‰²æ¨¡å¼æˆ–ç°åº¦æ¨¡å¼
+  if size(im, 3) == 1
+     out = bfltGray(im,w,sigma(1),sigma(2));
+  else
+     out = bfltColor(im,w,sigma(1),sigma(2));
+  end
 
-% ¼ìÑésigma²ÎÊıÊÇ·ñ·ûºÏÒªÇó
-if ~exist('sigma','var') || isempty(sigma) || ...
-      numel(sigma) ~= 2 || sigma(1) <= 0 || sigma(2) <= 0
-   sigma = [3 0.1];
-end
-
-%Ñ¡Ôñ²ÊÉ«Ä£Ê½»ò»Ò¶ÈÄ£Ê½
-if size(A,3) == 1
-   B = bfltGray(A,w,sigma(1),sigma(2));
-else
-   B = bfltColor(A,w,sigma(1),sigma(2));
+  imshow(cat(2,im2uint8(im), im2uint8(out)));
 end
