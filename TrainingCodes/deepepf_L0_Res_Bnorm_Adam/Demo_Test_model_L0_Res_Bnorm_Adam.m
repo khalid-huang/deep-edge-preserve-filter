@@ -16,7 +16,7 @@ pauseTime   = 3;
 
 modelName   = 'model_L0_Res_Bnorm_Adam';
 %epoch       = 1;
-epoch        = 3;
+epoch        = 16;
 
 %%% load Gaussian denoising model
 load(fullfile('data',modelName,[modelName,'-epoch-',num2str(epoch),'.mat']));
