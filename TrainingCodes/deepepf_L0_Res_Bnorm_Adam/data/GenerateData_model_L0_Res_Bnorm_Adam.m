@@ -8,7 +8,15 @@ addpath(genpath('./.'));
 
 batchSize      = 128;        %%% batch size
 max_numPatches = batchSize*2000;
-modelName      = 'data/model_L0_Res_Bnorm_Adam';
+
+%%model_shape is to use for the dir
+if strcmp(color_model, 'gray')
+  model_dir_shape = 'model_L0_Gray_Res_Bnorm_Adam';
+else
+  model_dir_shape = 'model_L0_Res_Bnorm_Adam';
+end
+
+modelDir    =  fullfile('data', model_dir_shape);
 
 %%% training and testing
 folder_train  = 'data/Train';  %%% training
@@ -29,12 +37,12 @@ inputs   = cat(4,inputs,inputs2);      clear inputs2;
 labels   = cat(4,labels,labels2);      clear labels2;
 set      = cat(2,set,set2);            clear set2;
 
-if ~exist(modelName,'file')
-    mkdir(modelName);
+if ~exist(modelDir,'file')
+    mkdir(modelDir);
 end
 
 %%% save data
 disp('----------------deal data done---------')
 disp('------------saving data----------')
-save(fullfile(modelName,'imdb'), 'inputs','labels','set','-v7.3')
+save(fullfile(modelDir,'imdb'), 'inputs','labels','set','-v7.3')
 disp('------------save data done------------')

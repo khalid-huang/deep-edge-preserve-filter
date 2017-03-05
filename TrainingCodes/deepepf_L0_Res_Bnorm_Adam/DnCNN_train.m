@@ -63,7 +63,7 @@ opts.test  = find(imdb.set==2);
 %%%  update settings
 %%%-------------------------------------------------------------------------
 
-opts = vl_argparse(opts, varargin);
+opts = vl_argparse(opts, varargin); %%use the value set in the Demo_Train_model_L0_Res_Bnorm_Adam to overwrite the value define here
 opts.numEpochs = numel(opts.learningRate);
 
 if ~exist(opts.expDir, 'dir'), mkdir(opts.expDir) ; end
@@ -93,7 +93,7 @@ end
 
 
 for epoch = start+1 : opts.numEpochs
-    
+
     %%% Train for one epoch.
     state.epoch = epoch ;
     state.learningRate = opts.learningRate(min(epoch, numel(opts.learningRate)));
@@ -103,14 +103,14 @@ for epoch = start+1 : opts.numEpochs
     if numel(opts.gpus) == 1
         net = vl_simplenn_move(net, 'gpu') ;
     end
-    
+
     [net, state] = process_epoch(net, state, imdb, opts, 'train');
     [net,  ~   ] = process_epoch(net, state, imdb, opts, 'test' );
-    
+
     net = vl_simplenn_move(net, 'cpu');
     %%% save current model
     save(modelPath(epoch), 'net')
-    
+
 end
 
 
@@ -119,9 +119,9 @@ function  [net, state] = process_epoch(net, state, imdb, opts, mode)
 %%%-------------------------------------------------------------------------
 
 if strcmp(mode,'train')
-    
+
     switch opts.solver
-        
+
         case 'SGD' %%% solver: SGD
             for i = 1:numel(net.layers)
                 if isfield(net.layers{i}, 'weights')
@@ -130,7 +130,7 @@ if strcmp(mode,'train')
                     end
                 end
             end
-            
+
         case 'Adam' %%% solver: Adam
             for i = 1:numel(net.layers)
                 if isfield(net.layers{i}, 'weights')
@@ -141,9 +141,9 @@ if strcmp(mode,'train')
                     end
                 end
             end
-            
+
     end
-    
+
 end
 
 
@@ -151,21 +151,21 @@ subset = state.(mode) ;
 num = 0 ;
 res = [];
 for t=1:opts.batchSize:numel(subset)
-    
+
     %%% get this image batch
     batchStart = t;
     batchEnd = min(t+opts.batchSize-1, numel(subset));
     batch = subset(batchStart : 1: batchEnd);
     num = num + numel(batch) ;
     if numel(batch) == 0, continue ; end
-    
+
     [inputs,labels] = state.getBatch(imdb, batch) ;
-    
+
     if numel(opts.gpus) == 1
         inputs = gpuArray(inputs);
         labels = gpuArray(labels);
     end
-    
+
     if strcmp(mode, 'train')
         dzdy = single(1);
         evalMode = 'normal';%%% forward and backward (Gradients)
@@ -173,28 +173,28 @@ for t=1:opts.batchSize:numel(subset)
         dzdy = [] ;
         evalMode = 'test';  %%% forward only
     end
-    
+
     net.layers{end}.class = labels ;
     res = vl_simplenn(net, inputs, dzdy, res, ...
         'mode', evalMode, ...
         'conserveMemory', opts.conserveMemory, ...
         'backPropDepth', opts.backPropDepth, ...
         'cudnn', opts.cudnn) ;
-    
+
     if strcmp(mode, 'train')
         [state, net] = params_updates(state, net, res, opts, opts.batchSize) ;
     end
-    
+
     lossL2 = gather(res(end).x) ;
-    
+
     %%%--------add your code here------------------------
-    
+
     %%%--------------------------------------------------
-    
+
     fprintf('%s: epoch %02d: %3d/%3d:', mode, state.epoch, ...
         fix((t-1)/opts.batchSize)+1, ceil(numel(subset)/opts.batchSize)) ;
     fprintf('error: %f \n', lossL2) ;
-    
+
 end
 
 
@@ -203,9 +203,9 @@ function [state, net] = params_updates(state, net, res, opts, batchSize)
 %%%-------------------------------------------------------------------------
 
 switch opts.solver
-    
+
     case 'SGD' %%% solver: SGD
-        
+
         for l=numel(net.layers):-1:1
             for j=1:numel(res(l).dzdw)
                 if j == 3 && strcmp(net.layers{l}.type, 'bnorm')
@@ -217,7 +217,7 @@ switch opts.solver
                 else
                     thisDecay = opts.weightDecay * net.layers{l}.weightDecay(j);
                     thisLR = state.learningRate * net.layers{l}.learningRate(j);
-                    
+
                     if opts.gradientClipping
                         theta = opts.thetaCurrent/thisLR;
                         state.layers{l}.momentum{j} = opts.momentum * state.layers{l}.momentum{j} ...
@@ -235,13 +235,13 @@ switch opts.solver
                 end
             end
         end
-        
-        
+
+
     case 'Adam'  %%% solver: Adam
-        
+
         for l=numel(net.layers):-1:1
             for j=1:numel(res(l).dzdw)
-                
+
                 if j == 3 && strcmp(net.layers{l}.type, 'bnorm')
                     %%% special case for learning bnorm moments
                     thisLR = net.layers{l}.learningRate(j) - opts.bnormLearningRate;
@@ -254,17 +254,17 @@ switch opts.solver
                     t = state.layers{l}.t{j};
                     alpha = thisLR;
                     lr = alpha * sqrt(1 - opts.beta2^t) / (1 - opts.beta1^t);
-                    
+
                     state.layers{l}.m{j} = state.layers{l}.m{j} + (1 - opts.beta1) .* (res(l).dzdw{j} - state.layers{l}.m{j});
                     state.layers{l}.v{j} = state.layers{l}.v{j} + (1 - opts.beta2) .* (res(l).dzdw{j} .* res(l).dzdw{j} - state.layers{l}.v{j});
-                    
+
                     if opts.gradientClipping
                         theta = opts.thetaCurrent/lr;
                         net.layers{l}.weights{j} = net.layers{l}.weights{j} - lr * gradientClipping(state.layers{l}.m{j} ./ (sqrt(state.layers{l}.v{j}) + opts.epsilon),theta);
                     else
                         net.layers{l}.weights{j} = net.layers{l}.weights{j} - lr * state.layers{l}.m{j} ./ (sqrt(state.layers{l}.v{j}) + opts.epsilon);
                     end
-                    
+
                 end
             end
         end
@@ -295,6 +295,3 @@ function [inputs,labels] = getSimpleNNBatch(imdb, batch)
 %%%-------------------------------------------------------------------------
 inputs = imdb.inputs(:,:,:,batch);
 labels = imdb.labels(:,:,:,batch);
-
-
-

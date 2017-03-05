@@ -8,18 +8,24 @@ if nargin == 0
   color_model = 'gray';
 end
 
-
+%%model_shape is to use for the dir
+if strcmp(color_model, 'gray')
+  model_dir_shape = 'model_L0_Gray_Res_Bnorm_Adam';
+else
+  model_dir_shape = 'model_L0_Res_Bnorm_Adam';
+end
 %% generate data to train and val
-if exist('./data/model_L0_Res_Bnorm_Adam/imdb.mat', 'file') == 0
+
+modelDir = strcat('./data/', model_dir_shape);
+if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
   GenerateData_model_L0_Res_Bnorm_Adam(color_model)
 end
 %%% training data first.
 
-
 %%%-------------------------------------------------------------------------
 %%% configuration
 %%%-------------------------------------------------------------------------
-opts.modelName        = 'model_L0_Res_Bnorm_Adam'; %%% model name
+opts.modelName        = model_dir_shape; %%% model name
 %opts.learningRate    = [logspace(-3,-3,30) logspace(-4,-4,20)];%%% you can change the learning rate
 opts.learningRate     = [logspace(-3,-3,8) logspace(-4,-4,8)];
 opts.batchSize        = 128; %%% default
