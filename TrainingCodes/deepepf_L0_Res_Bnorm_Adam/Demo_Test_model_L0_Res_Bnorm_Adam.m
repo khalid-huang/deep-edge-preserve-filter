@@ -16,7 +16,7 @@ pauseTime   = 3;
 
 modelName   = 'model_L0_Res_Bnorm_Adam';
 %epoch       = 1;
-epoch        = 6;
+epoch        = 3;
 
 %%% load Gaussian denoising model
 load(fullfile('data',modelName,[modelName,'-epoch-',num2str(epoch),'.mat']));
@@ -57,10 +57,10 @@ for i = 1:length(filePaths)
     [~,nameCur,extCur] = fileparts(filePaths(i).name);
     label = im2double(label);
     input = im2single(input);
-    if size(image,3) == 3
-        input = rgb2gray(input);
-        label = rgb2gray(label);
-    end
+    %if size(image,3) == 3
+    %    input = rgb2gray(input);
+    %    label = rgb2gray(label);
+    %end
     %%% convert to GPU
     if useGPU
         input = gpuArray(input);
