@@ -1,7 +1,7 @@
 %avrage filter
 function [] = avgFilter(filepath,n)
   if nargin == 1
-    n = 5;
+    n = 9;
   end
 
   im = imread(filepath);
