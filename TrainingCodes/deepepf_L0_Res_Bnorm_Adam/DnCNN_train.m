@@ -42,6 +42,7 @@ opts.bnormLearningRate = 0;
 %%%-------------------------------------------------------------------------
 
 opts.conserveMemory = false ;
+%opts.conserveMemory = true;
 opts.mode = 'normal';
 opts.cudnn = true ;
 opts.backPropDepth = +inf ;

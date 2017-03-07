@@ -15,6 +15,14 @@ else
   model_dir_shape = 'model_L0_Res_Bnorm_Adam';
 end
 
+<<<<<<< HEAD
+=======
+modelDir = strcat('./data/', model_dir_shape);
+modelDir
+if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
+  GenerateData_model_L0_Res_Bnorm_Adam(color_model)
+end
+>>>>>>> b65680976ac9e06101f20b355978de46d30d25b0
 %%% training data first.
 
 %%%-------------------------------------------------------------------------
@@ -22,7 +30,7 @@ end
 %%%-------------------------------------------------------------------------
 opts.modelName        = model_dir_shape; %%% model name
 %opts.learningRate    = [logspace(-3,-3,30) logspace(-4,-4,20)];%%% you can change the learning rate
-opts.learningRate     = [logspace(-3,-3,20) logspace(-4,-4,28)];
+opts.learningRate     = [logspace(-3,-3,20) logspace(0,-3,10)];
 %opts.learningRate = [logspace(-3,-3,2)];
 %opts.batchSize        = 128; %%% default
 opts.batchSize        = 64;
@@ -62,7 +70,7 @@ disp('loading data done');
 
 [net, info] = DnCNN_train(net, imdb, ...
     'expDir', opts.expDir, ...
-    'learningRate',opts.learningRate, ...
+    'learningRate',opts.learningRate,adprst ...
     'solver',opts.solver, ...
     'gradientClipping',opts.gradientClipping, ...
     'batchSize', opts.batchSize, ...
