@@ -93,7 +93,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
           title([filePaths(i).name,'    ',num2str(PSNRCur,'%2.2f'),'dB','    ',num2str(SSIMCur,'%2.4f')])
           %imshow(cat(2, im2uint8(input), im2uint8(output)))
           drawnow;
-          #pause(pauseTime)
+          %pause(pauseTime)
           pause;
       end
       PSNRs(i) = PSNRCur;
