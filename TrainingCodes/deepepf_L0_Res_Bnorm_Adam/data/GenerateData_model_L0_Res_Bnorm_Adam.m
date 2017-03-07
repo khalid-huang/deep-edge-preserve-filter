@@ -7,6 +7,7 @@ addpath(genpath('./.'));
 %addpath utilities;
 
 %batchSize      = 128;        %%% batch size
+batchSize
 max_numPatches = batchSize*2000;
 
 %%model_shape is to use for the dir
@@ -23,8 +24,8 @@ folder_train  = 'data/Train';  %%% training
 folder_test   = 'data/Test';%%% testing
 %size_input    = 40;          %%% training
 %size_label    = 40;          %%% testing
-size_input    = 80;
-size_label    = 80;
+size_input    = 60;
+size_label    = 60;
 
 stride_train  = 60;          %%% training
 stride_test   = 80;          %%% testing
