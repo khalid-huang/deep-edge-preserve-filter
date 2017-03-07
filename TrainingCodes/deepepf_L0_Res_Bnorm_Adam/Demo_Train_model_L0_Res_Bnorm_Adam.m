@@ -30,7 +30,6 @@ opts.gpus             = [1]; %%% this code can only support one GPU!
 
 %%% solver
 opts.solver           = 'Adam';
-%%opts.solver           = 'SGD';
 
 opts.gradientClipping = false; %%% Set 'true' to prevent exploding gradients in the beginning.
 opts.expDir      = fullfile('data', opts.modelName);
@@ -38,7 +37,7 @@ opts.imdbPath    = fullfile(opts.expDir, 'imdb.mat');
 
 %% generate data to train and val
 modelDir = strcat('./data/', model_dir_shape);
-modelDir
+%modelDir
 if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
   GenerateData_model_L0_Res_Bnorm_Adam(color_model, opts.batchSize);
 end
