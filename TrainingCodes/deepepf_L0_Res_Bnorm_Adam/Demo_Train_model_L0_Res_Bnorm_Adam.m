@@ -25,23 +25,23 @@ opts.modelName        = model_dir_shape; %%% model name
 opts.learningRate     = [logspace(-3,-3,20) logspace(0,-3,10)];
 %opts.learningRate = [logspace(-3,-3,2)];
 %opts.batchSize        = 128; %%% default
-opts.batchSize        = 64;
+opts.batchSize       = 64;
 opts.gpus             = [1]; %%% this code can only support one GPU!
 
 %%% solver
 opts.solver           = 'Adam';
+%%opts.solver           = 'SGD';
 
 opts.gradientClipping = false; %%% Set 'true' to prevent exploding gradients in the beginning.
 opts.expDir      = fullfile('data', opts.modelName);
 opts.imdbPath    = fullfile(opts.expDir, 'imdb.mat');
 
 %% generate data to train and val
-modelDir = strcat('./data/', model_dir_shape);
-%modelDir
-if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
-  GenerateData_model_L0_Res_Bnorm_Adam(color_model, opts.batchSize);
-end
 
+modelDir = strcat('./data/', model_dir_shape);
+if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
+  GenerateData_model_L0_Res_Bnorm_Adam(color_model, opts.batchSize)
+end
 
 %%%-------------------------------------------------------------------------
 %%%   Initialize model and load data
@@ -62,7 +62,7 @@ disp('loading data done');
 
 [net, info] = DnCNN_train(net, imdb, ...
     'expDir', opts.expDir, ...
-    'learningRate',opts.learningRate,adprst ...
+    'learningRate',opts.learningRate, ...
     'solver',opts.solver, ...
     'gradientClipping',opts.gradientClipping, ...
     'batchSize', opts.batchSize, ...
