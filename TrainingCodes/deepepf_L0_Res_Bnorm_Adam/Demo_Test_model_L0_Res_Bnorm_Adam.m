@@ -10,19 +10,19 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   end
 
   addpath(fullfile('data','utilities'));
-  folderTest  = fullfile('data','Test'); %%% test dataset
-
+  %folderTest  = fullfile('data','Test'); %%% test dataset
+  folderVal = fullfile('data', 'Val');
   showResult  = 1;
   useGPU      = 1;
   pauseTime   = 1;
-  
+
   %%model_shape is to use for the dir
   if strcmp(color_model, 'gray')
     model_dir_shape = 'model_L0_Gray_Res_Bnorm_Adam';
   else
     model_dir_shape = 'model_L0_Res_Bnorm_Adam';
   end
-  
+
   modelDir  = fullfile('data',model_dir_shape);
   modelName   = model_dir_shape;
   epoch      = 1;
@@ -49,7 +49,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   ext         =  {'*.jpg','*.png','*.bmp'};
   filePaths   =  [];
   for i = 1 : length(ext)
-      filePaths = cat(1,filePaths, dir(fullfile(folderTest,ext{i})));
+      filePaths = cat(1,filePaths, dir(fullfile(folderVal,ext{i})));
   end
 
   %%% PSNR and SSIM
@@ -61,8 +61,8 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       %%% read images
       %image = imread(fullfile(folderTest,filePaths(i).name));
 
-      input = imread(fullfile(folderTest, filePaths(i).name));
-      label = L0Smoothing(imread(fullfile(folderTest,filePaths(i).name)));
+      input = imread(fullfile(folderVal, filePaths(i).name));
+      label = L0Smoothing(imread(fullfile(folderVal,filePaths(i).name)));
 
       [~,nameCur,extCur] = fileparts(filePaths(i).name);
       label = im2double(label);
@@ -93,7 +93,8 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
           title([filePaths(i).name,'    ',num2str(PSNRCur,'%2.2f'),'dB','    ',num2str(SSIMCur,'%2.4f')])
           %imshow(cat(2, im2uint8(input), im2uint8(output)))
           drawnow;
-          pause(pauseTime)
+          #pause(pauseTime)
+          pause;
       end
       PSNRs(i) = PSNRCur;
       SSIMs(i) = SSIMCur;
