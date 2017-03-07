@@ -33,8 +33,8 @@ opts.batchSize        = 128; %%% default
 opts.gpus             = [1]; %%% this code can only support one GPU!
 
 %%% solver
-%%opts.solver           = 'Adam';
-opts.solver           = 'SGD';
+opts.solver           = 'Adam';
+%%opts.solver           = 'SGD';
 
 opts.gradientClipping = false; %%% Set 'true' to prevent exploding gradients in the beginning.
 opts.expDir      = fullfile('data', opts.modelName);
