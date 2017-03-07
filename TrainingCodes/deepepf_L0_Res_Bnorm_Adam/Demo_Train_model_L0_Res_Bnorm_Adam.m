@@ -15,14 +15,6 @@ else
   model_dir_shape = 'model_L0_Res_Bnorm_Adam';
 end
 
-<<<<<<< HEAD
-=======
-modelDir = strcat('./data/', model_dir_shape);
-modelDir
-if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
-  GenerateData_model_L0_Res_Bnorm_Adam(color_model)
-end
->>>>>>> b65680976ac9e06101f20b355978de46d30d25b0
 %%% training data first.
 
 %%%-------------------------------------------------------------------------
@@ -46,6 +38,7 @@ opts.imdbPath    = fullfile(opts.expDir, 'imdb.mat');
 
 %% generate data to train and val
 modelDir = strcat('./data/', model_dir_shape);
+modelDir
 if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
   GenerateData_model_L0_Res_Bnorm_Adam(color_model, opts.batchSize);
 end
