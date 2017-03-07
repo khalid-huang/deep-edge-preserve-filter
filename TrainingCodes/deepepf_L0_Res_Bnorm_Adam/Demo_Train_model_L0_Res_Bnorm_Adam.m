@@ -14,12 +14,7 @@ if strcmp(color_model, 'gray')
 else
   model_dir_shape = 'model_L0_Res_Bnorm_Adam';
 end
-%% generate data to train and val
 
-modelDir = strcat('./data/', model_dir_shape);
-if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
-  GenerateData_model_L0_Res_Bnorm_Adam(color_model)
-end
 %%% training data first.
 
 %%%-------------------------------------------------------------------------
@@ -29,7 +24,8 @@ opts.modelName        = model_dir_shape; %%% model name
 %opts.learningRate    = [logspace(-3,-3,30) logspace(-4,-4,20)];%%% you can change the learning rate
 opts.learningRate     = [logspace(-3,-3,20) logspace(-4,-4,28)];
 %opts.learningRate = [logspace(-3,-3,2)];
-opts.batchSize        = 128; %%% default
+%opts.batchSize        = 128; %%% default
+opts.batchSize        = 64;
 opts.gpus             = [1]; %%% this code can only support one GPU!
 
 %%% solver
@@ -39,6 +35,13 @@ opts.solver           = 'Adam';
 opts.gradientClipping = false; %%% Set 'true' to prevent exploding gradients in the beginning.
 opts.expDir      = fullfile('data', opts.modelName);
 opts.imdbPath    = fullfile(opts.expDir, 'imdb.mat');
+
+%% generate data to train and val
+modelDir = strcat('./data/', model_dir_shape);
+if exist(fullfile(modelDir, 'imdb.mat'), 'file') == 0
+  GenerateData_model_L0_Res_Bnorm_Adam(color_model, opts.batchSize);
+end
+
 
 %%%-------------------------------------------------------------------------
 %%%   Initialize model and load data

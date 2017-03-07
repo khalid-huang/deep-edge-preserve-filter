@@ -1,4 +1,4 @@
-function [] = GenerateData_model_L0_Res_Bnorm_Adam(color_model)
+function [] = GenerateData_model_L0_Res_Bnorm_Adam(color_model, batchSize)
 %%% Generate the training data.
 
 %clear;close all;
@@ -6,7 +6,7 @@ function [] = GenerateData_model_L0_Res_Bnorm_Adam(color_model)
 addpath(genpath('./.'));
 %addpath utilities;
 
-batchSize      = 128;        %%% batch size
+%batchSize      = 128;        %%% batch size
 max_numPatches = batchSize*2000;
 
 %%model_shape is to use for the dir
