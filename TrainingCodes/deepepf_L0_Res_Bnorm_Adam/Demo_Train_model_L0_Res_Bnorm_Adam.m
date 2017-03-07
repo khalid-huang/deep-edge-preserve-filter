@@ -27,13 +27,14 @@ end
 %%%-------------------------------------------------------------------------
 opts.modelName        = model_dir_shape; %%% model name
 %opts.learningRate    = [logspace(-3,-3,30) logspace(-4,-4,20)];%%% you can change the learning rate
-opts.learningRate     = [logspace(-3,-3,15) logspace(-4,-4,15)];
+opts.learningRate     = [logspace(-3,-3,20) logspace(-4,-4,28)];
 %opts.learningRate = [logspace(-3,-3,2)];
 opts.batchSize        = 128; %%% default
 opts.gpus             = [1]; %%% this code can only support one GPU!
 
 %%% solver
-opts.solver           = 'Adam';
+%%opts.solver           = 'Adam';
+opts.solver           = 'SGD';
 
 opts.gradientClipping = false; %%% Set 'true' to prevent exploding gradients in the beginning.
 opts.expDir      = fullfile('data', opts.modelName);

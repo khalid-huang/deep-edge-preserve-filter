@@ -25,8 +25,8 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   
   modelDir  = fullfile('data',model_dir_shape);
   modelName   = model_dir_shape;
-  %epoch      = 1;
-  epoch       = findLastEpoch(modelDir, modelName);
+  epoch      = 1;
+  %epoch       = findLastEpoch(modelDir, modelName);
 
   %%% load Gaussian denoising model
   load(fullfile(modelDir,[modelName,'-epoch-',num2str(epoch),'.mat']));
@@ -100,6 +100,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   end
 
   disp([mean(PSNRs),mean(SSIMs)]);
+  epoch
 end
 
 %% get the max epoch net

@@ -53,7 +53,8 @@ opts.skipForward = false;
 
 opts.batchSize = 128 ;
 opts.gpus = [];
-opts.numEpochs = 300 ;
+%opts.numEpochs = 300 ;
+opts.numEpochs = 60;
 opts.modelName   = 'model';
 opts.expDir = fullfile('data',opts.modelName) ;
 opts.train = find(imdb.set==1); %return the index
@@ -64,7 +65,7 @@ opts.test  = find(imdb.set==2);
 %%%-------------------------------------------------------------------------
 
 opts = vl_argparse(opts, varargin); %%use the value set in the Demo_Train_model_L0_Res_Bnorm_Adam to overwrite the value define here
-opts.numEpochs = numel(opts.learningRate);
+%%opts.numEpochs = numel(opts.learningRate);
 
 if ~exist(opts.expDir, 'dir'), mkdir(opts.expDir) ; end
 
