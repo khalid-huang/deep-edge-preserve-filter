@@ -11,7 +11,8 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
 
   addpath(fullfile('data','utilities'));
   %folderTest  = fullfile('data','Test'); %%% test dataset
-  folderVal = fullfile('data', 'Val');
+  folderPaper = fullfile('data','paper_relative');
+  folderVal = fullfile(folderPaper, 'Val');
   showResult  = 1;
   useGPU      = 1;
   pauseTime   = 1;
@@ -96,6 +97,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
           %pause(pauseTime)
           pause;
       end
+      imwrite(im2uint8(output),fullfile(folderPaper, 'result', filePaths(i).name));
       PSNRs(i) = PSNRCur;
       SSIMs(i) = SSIMCur;
   end
