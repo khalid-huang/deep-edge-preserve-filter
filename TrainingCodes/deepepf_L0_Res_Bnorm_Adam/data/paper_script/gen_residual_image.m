@@ -5,5 +5,5 @@ input = im2single(input);
 label = im2single(label);
 res = input - label;
 
-imshow(cat(2, im2uint8(input), im2uint8(res)));
+imshow(cat(2, im2uint8(label), im2uint8(res)));
 drawnow;
