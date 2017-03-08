@@ -12,7 +12,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   addpath(fullfile('data','utilities'));
   %folderTest  = fullfile('data','Test'); %%% test dataset
   folderPaper = fullfile('data','paper_relative');
-  folderVal = fullfile(folderPaper, 'Val');
+  folderVal = fullfile(folderPaper, 'origin');
   showResult  = 1;
   useGPU      = 1;
   pauseTime   = 1;
