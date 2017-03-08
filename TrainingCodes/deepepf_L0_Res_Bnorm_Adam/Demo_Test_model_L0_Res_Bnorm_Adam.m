@@ -90,14 +90,15 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       %%% calculate PSNR and SSIM
       [PSNRCur, SSIMCur] = Cal_PSNRSSIM(im2uint8(label),im2uint8(output),0,0);
       if showResult
-          imshow(cat(2,im2uint8(label),im2uint8(input),im2uint8(output)));
-          title([filePaths(i).name,'    ',num2str(PSNRCur,'%2.2f'),'dB','    ',num2str(SSIMCur,'%2.4f')])
+          imshow(im2uint8(output));
+          %imshow(cat(2,im2uint8(label),im2uint8(input),im2uint8(output)));
+          %title([filePaths(i).name,'    ',num2str(PSNRCur,'%2.2f'),'dB','    ',num2str(SSIMCur,'%2.4f')])
           %imshow(cat(2, im2uint8(input), im2uint8(output)))
           drawnow;
           %pause(pauseTime)
           pause;
       end
-      imwrite(im2uint8(output),fullfile(folderPaper, 'result', filePaths(i).name));
+      %imwrite(im2uint8(output),fullfile(folderPaper, 'result', filePaths(i).name));
       PSNRs(i) = PSNRCur;
       SSIMs(i) = SSIMCur;
   end
