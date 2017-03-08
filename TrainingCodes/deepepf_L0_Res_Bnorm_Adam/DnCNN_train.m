@@ -55,7 +55,6 @@ opts.skipForward = false;
 opts.batchSize = 128 ;
 opts.gpus = [];
 opts.numEpochs = 300 ;
-%opts.numEpochs = 60;
 opts.modelName   = 'model';
 opts.expDir = fullfile('data',opts.modelName) ;
 opts.train = find(imdb.set==1); %return the index
@@ -93,12 +92,15 @@ if start >= 1
     % net = vl_simplenn_tidy(net) ;
 end
 
-
+start
+num_temp = opts.numEpochs;
+num_temp
 for epoch = start+1 : opts.numEpochs
 
     %%% Train for one epoch.
     state.epoch = epoch ;
     state.learningRate = opts.learningRate(min(epoch, numel(opts.learningRate)));
+    disp(state.learningRate);
     state.train = opts.train(randperm(numel(opts.train))) ; %%% shuffle
     state.test  = opts.test; %%% no need to shuffle
     opts.thetaCurrent = opts.theta(min(epoch, numel(opts.theta)));

@@ -22,10 +22,10 @@ modelDir    =  fullfile('data', model_dir_shape);
 %%% training and testing
 folder_train  = 'data/Train';  %%% training
 folder_test   = 'data/Test';%%% testing
-%size_input    = 40;          %%% training
-%size_label    = 40;          %%% testing
-size_input    = 60;
-size_label    = 60;
+size_input    = 40;          %%% training
+size_label    = 40;          %%% testing
+%size_input    = 50;
+%size_label    = 50;
 
 stride_train  = 60;          %%% training
 stride_test   = 80;          %%% testing
