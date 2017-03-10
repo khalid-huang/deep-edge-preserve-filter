@@ -25,8 +25,10 @@ labels  = zeros(size_label, size_label, PG_channel, 1,'single');
 
 for i = 1 : length(filepaths)
   %image = imread('test.jpg');
-  image = imread(fullfile(folder, filepaths(i).name));
-  image_label = L0Smoothing(image);
+  %image = imread(fullfile(folder, filepaths(i).name));
+  %image_label = L0Smoothing(image);
+  image_path = fullfile(folder,filepaths(i).name);
+  image_label = bfilter(image_path);
   if size(image, 3) == 3 && strcmp(color_model, 'gray') == 1
     image = rgb2gray(image); %uint8
     image_label = rgb2gray(image_label); %uint8

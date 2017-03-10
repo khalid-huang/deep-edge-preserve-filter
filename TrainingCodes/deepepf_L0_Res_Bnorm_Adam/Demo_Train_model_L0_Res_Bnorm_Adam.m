@@ -2,6 +2,10 @@ function [] = Demo_Train_model_L0_Res_Bnorm_Adam(color_model)
 
 %path addpath
 addpath('./data','./data/utilities');
+addpath(fullfile('../../methods/Bilateral_Filter'));
+addpath(fullfile('../../methods/L0'));
+addpath(fullfile('../../methods/tsmoothing'));
+addpath(fullfile('../../methods/wls'));
 
 %%color_model: 'color' or 'gray'
 if nargin == 0

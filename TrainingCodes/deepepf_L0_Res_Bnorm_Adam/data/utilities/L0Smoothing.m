@@ -1,9 +1,9 @@
 %   Distribution code Version 1.0 -- 09/23/2011 by Jiaya Jia Copyright 2011, The Chinese University of Hong Kong.
 %
-%   The Code is created based on the method described in the following paper 
-%   [1] "Image Smoothing via L0 Gradient Minimization", Li Xu, Cewu Lu, Yi Xu, Jiaya Jia, ACM Transactions on Graphics, 
-%   (SIGGRAPH Asia 2011), 2011. 
-%  
+%   The Code is created based on the method described in the following paper
+%   [1] "Image Smoothing via L0 Gradient Minimization", Li Xu, Cewu Lu, Yi Xu, Jiaya Jia, ACM Transactions on Graphics,
+%   (SIGGRAPH Asia 2011), 2011.
+%
 %   The code and the algorithm are for non-comercial use only.
 
 
@@ -12,14 +12,14 @@ function S = L0Smoothing(Im, lambda, kappa)
 %   S = L0Smooth(Im, lambda, kappa) performs L0 graidient smoothing of input
 %   image Im, with smoothness weight lambda and rate kappa.
 %
-%   Paras: 
+%   Paras:
 %   @Im    : Input UINT8 image, both grayscale and color images are acceptable.
-%   @lambda: Smoothing parameter controlling the degree of smooth. (See [1]) 
+%   @lambda: Smoothing parameter controlling the degree of smooth. (See [1])
 %            Typically it is within the range [1e-3, 1e-1], 2e-2 by default.
 %   @kappa : Parameter that controls the rate. (See [1])
-%            Small kappa results in more iteratioins and with sharper edges.   
-%            We select kappa in (1, 2].    
-%            kappa = 2 is suggested for natural images.  
+%            Small kappa results in more iteratioins and with sharper edges.
+%            We select kappa in (1, 2].
+%            kappa = 2 is suggested for natural images.
 %
 %   Example
 %   ==========
@@ -27,6 +27,7 @@ function S = L0Smoothing(Im, lambda, kappa)
 %   S  = L0Smooth(Im); % Default Parameters (lambda = 2e-2, kappa = 2)
 %   figure, imshow(Im), figure, imshow(S);
 
+Im = imread(Im);
 
 if ~exist('kappa','var')
     kappa = 2.0;
@@ -64,7 +65,7 @@ while beta < betamax
     % S subproblem
     Normin2 = [h(:,end,:) - h(:, 1,:), -diff(h,1,2)]; %根据公式，先进行偏导，再进行fft2，也是可以的。对h进行x求导
     Normin2 = Normin2 + [v(end,:,:) - v(1, :,:); -diff(v,1,1)];%对v进行y求导，也就是行。
-    FS = (Normin1 + beta*fft2(Normin2))./Denormin; %Normin1是对原图像的fft2; 
+    FS = (Normin1 + beta*fft2(Normin2))./Denormin; %Normin1是对原图像的fft2;
     S = real(ifft2(FS));
     beta = beta*kappa;
     fprintf('.');
