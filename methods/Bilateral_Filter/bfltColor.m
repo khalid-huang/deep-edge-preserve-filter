@@ -46,7 +46,7 @@ function B = bfltColor(A,w,sigma_d,sigma_r)
            B(i,j,3) = sum(sum(F.*I(:,:,3)))/norm_F;
 
      end
-     waitbar(i/dim(1));
+     %waitbar(i/dim(1));
   end
 
   % 将图像转换为sRGB色彩空间.

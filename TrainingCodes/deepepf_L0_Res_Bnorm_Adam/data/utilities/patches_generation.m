@@ -24,10 +24,12 @@ inputs  = zeros(size_input, size_input, PG_channel, 1,'single');
 labels  = zeros(size_label, size_label, PG_channel, 1,'single');
 
 for i = 1 : length(filepaths)
+  disp(i);
   %image = imread('test.jpg');
   %image = imread(fullfile(folder, filepaths(i).name));
   %image_label = L0Smoothing(image);
   image_path = fullfile(folder,filepaths(i).name);
+  image = imread(image_path);
   image_label = bfilter(image_path);
   if size(image, 3) == 3 && strcmp(color_model, 'gray') == 1
     image = rgb2gray(image); %uint8
@@ -59,7 +61,7 @@ inputs = inputs(:,:,:,1:(size(inputs,4)-mod(size(inputs,4),batchSize)));
 labels = labels(:,:,:,1:(size(labels ,4)-mod(size(labels ,4),batchSize)));
 labels = shave(inputs,[padding,padding])-labels; %%% residual image patches; pay attention to this!!!
 
-%shuffle the data; according the order to shuffle the train data's order;
+%shuffle the data; according the order to shuffle the train data order;
 order  = randperm(size(inputs,4));
 inputs = inputs(:, :, :, order);
 labels = labels(:, :, :, order);
