@@ -3,7 +3,7 @@
 % w为双边滤波器（核）的边长/2
 % sigma定义域方差σd记为SIGMA(1),值域方差σr记为SIGMA(2)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function B = bfilter(filepath,w,sigma)
+function out = bfilter(filepath,w,sigma)
   if nargin == 1
     w = 5;           % 双边滤波器半宽，w越大平滑作用越强
     sigma = [3 0.2]; % 空间距离方差σd记为SIGMA(1),像素亮度方差σr记为SIGMA(2),即空间邻近度因子和亮度相似度因子的衰减程度
@@ -18,5 +18,5 @@ function B = bfilter(filepath,w,sigma)
      out = bfltColor(im,w,sigma(1),sigma(2));
   end
 
-  imshow(cat(2,im2uint8(im), im2uint8(out)));
+  %imshow(cat(2,im2uint8(im), im2uint8(out)));
 end

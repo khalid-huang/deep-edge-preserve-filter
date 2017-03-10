@@ -17,8 +17,8 @@ function B = bfltColor(A,w,sigma_d,sigma_r)
   sigma_r = 100*sigma_r;
 
   % 创建进度条
-  h = waitbar(0,'Applying bilateral filter...');
-  set(h,'Name','Bilateral Filter Progress');
+ % h = waitbar(0,'Applying bilateral filter...');
+  %set(h,'Name','Bilateral Filter Progress');
 
   % 应用双边滤波
   dim = size(A);
@@ -57,5 +57,5 @@ function B = bfltColor(A,w,sigma_d,sigma_r)
   end
 
   % 结束进度条
-  close(h);
+  %close(h);
 end

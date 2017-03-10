@@ -27,6 +27,7 @@ function S = L0Smoothing(Im, lambda, kappa)
 %   S  = L0Smooth(Im); % Default Parameters (lambda = 2e-2, kappa = 2)
 %   figure, imshow(Im), figure, imshow(S);
 
+Im = imread(Im);
 
 if ~exist('kappa','var')
     kappa = 2.0;
