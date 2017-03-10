@@ -68,7 +68,9 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       %image = imread(fullfile(folderTest,filePaths(i).name));
 
       input = imread(fullfile(folderVal, filePaths(i).name));
-      label = L0Smoothing(imread(fullfile(folderVal,filePaths(i).name)));
+      image_path = fullfile(folderVal, filePaths(i).name);
+      label = bfilter(image_path);
+      %label = L0Smoothing(imread(fullfile(folderVal,filePaths(i).name)));
 
       [~,nameCur,extCur] = fileparts(filePaths(i).name);
       label = im2double(label);
@@ -103,7 +105,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
           %pause(pauseTime)
           pause;
       end
-      imwrite(im2uint8(output),fullfile(folderPaper, 'result', filePaths(i).name));
+      imwrite(im2uint8(output),fullfile(folderPaper, 'result_blf', filePaths(i).name));
       PSNRs(i) = PSNRCur;
       SSIMs(i) = SSIMCur;
   end
