@@ -6,42 +6,32 @@
 clc; close all;
 clear all;
 
-% ÎÄ¼şÂ·¾¶
-filepath = '..\..\Input\';
+% WLSï¿½Ë²ï¿½ï¿½ï¿½ï¿½ï¿½
+lambda = 0.35;	% ï¿½ï¿½Ğ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ò»¯²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Ô²ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
+alpha = 1.8;	% ï¿½ï¿½ï¿½Ó¸ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ñ»¯µÄ±ï¿½Ôµ
 
-% Êä³öÂ·¾¶
-outputpath = '..\..\Output\WLS-res\';
-
-% ÎÄ¼şÃû³Æ
-filename = '03_16';
-fmt = '.jpg';
-
-% WLSÂË²¨²ÎÊı
-lambda = 0.35;	% ×îĞ¡¶ş³ËÕıÔò»¯²ÎÊı£¬Ôö¼ÓËüµÄÖµ¿ÉÒÔ²úÉú¸ü¼ÓÆ½»¬µÄÍ¼Ïñ
-alpha = 1.8;	% Ôö¼Ó¸ÃÖµ»á²úÉú¸üÎªÈñ»¯µÄ±ßÔµ
-
-% ¶ÁÈ¡Í¼Ïñ
-img = double(imread([filepath, filename, fmt]))./255;
-img = rgb2gray(img);
-% ÏÔÊ¾ÊäÈëÍ¼Ïñ
+% ï¿½ï¿½È¡Í¼ï¿½ï¿½
+img = double(imread('pflower.jpg'))./255;
+%img = rgb2gray(img);
+% ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½
 figure, imshow(img),title('Input');
 
-% wÎªÍ¼Ïñ¿í¶È£¬hÎªÍ¼Ïñ¸ß¶È£¬cÎªÑÕÉ«Í¨µÀ
+% wÎªÍ¼ï¿½ï¿½ï¿½È£ï¿½hÎªÍ¼ï¿½ï¿½ß¶È£ï¿½cÎªï¿½ï¿½É«Í¨ï¿½ï¿½
 [h, w, c] = size(img);
 
-%% Í¼Ïñ´¦Àí
-% ÅĞ¶ÏÊÇ²ÊÉ«Í¼Ïñ»¹ÊÇ»Ò¶ÈÍ¼Ïñ
-if c == 1 % »Ò¶ÈÍ¼Ïñ
+%% Í¼ï¿½ï¿½ï¿½ï¿½
+% ï¿½Ğ¶ï¿½ï¿½Ç²ï¿½É«Í¼ï¿½ï¿½ï¿½Ç»Ò¶ï¿½Í¼ï¿½ï¿½
+if c == 1 % ï¿½Ò¶ï¿½Í¼ï¿½ï¿½
   
-    % ¼ÓÈ¨×îĞ¡¶ş³Ë´¦Àí
+    % ï¿½ï¿½È¨ï¿½ï¿½Ğ¡ï¿½ï¿½ï¿½Ë´ï¿½ï¿½ï¿½
     outimg = wlsFilter(img, lambda, alpha); 
 
-else  % ²ÊÉ«Í¼Ïñ
+else  % ï¿½ï¿½É«Í¼ï¿½ï¿½
     
-    % Êä³öÍ¼Ïñ¿Õ¼ä
+    % ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Õ¼ï¿½
     outimg = img;
     
-    % Ê¹ÓÃ¼ÓÈ¨×îĞ¡¶ş³ËÂË²¨½øĞĞ´¦Àí
+    % Ê¹ï¿½Ã¼ï¿½È¨ï¿½ï¿½Ğ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ë²ï¿½ï¿½ï¿½ï¿½Ğ´ï¿½ï¿½ï¿½
     outimg(:,:,1) = wlsFilter(img(:,:,1), lambda, alpha);
     outimg(:,:,2) = wlsFilter(img(:,:,2), lambda, alpha);
     outimg(:,:,3) = wlsFilter(img(:,:,3), lambda, alpha);
@@ -51,6 +41,6 @@ end
 figure, imshow(outimg),title('Output');
 % figure, imshow(outimg),colormap(Jet),title('Result Colorization');
 
-outname = [outputpath,filename,'_WLS.png'];
-%imwrite(outimg, outname); % ±£´æ´¦Àí½á¹û
+%outname = [outputpath,filename,'_WLS.png'];
+%imwrite(outimg, outname); % ï¿½ï¿½ï¿½æ´¦ï¿½ï¿½ï¿½ï¿½
 
