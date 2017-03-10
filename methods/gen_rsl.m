@@ -1,4 +1,4 @@
-%gen_rsl('', 'wls_run');
+%gen_rsl('wls', 'wls_run');
 function [] = gen_rsl(filepath, filename)
   addpath(filepath);
 
