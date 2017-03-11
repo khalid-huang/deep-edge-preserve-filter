@@ -19,7 +19,8 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   folderPaper = fullfile('data','paper_relative');
   folderVal = fullfile(folderPaper, 'origin');
   showResult  = 1;
-  useGPU      = 1;
+  %useGPU      = 1;
+  useGPU      = 0;
   pauseTime   = 1;
 
   %%model_shape is to use for the dir
@@ -69,7 +70,9 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
 
       input = imread(fullfile(folderVal, filePaths(i).name));
       image_path = fullfile(folderVal, filePaths(i).name);
+      tic;
       label = wls_run(image_path);
+      time1 = toc;
       %label = bfilter(image_path);
       %label = L0Smoothing(imread(fullfile(folderVal,filePaths(i).name)));
 
@@ -85,10 +88,11 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       if useGPU
           input = gpuArray(input);
       end
-
+      
+      tic;
       res    = vl_simplenn(net,input,[],[],'conserveMemory',true,'mode','test');
       output = input - res(end).x;
-
+      time2 = toc;
       %%% convert to CPU
       if useGPU
           output = gather(output);
@@ -106,9 +110,10 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
           %pause(pauseTime)
           pause;
       end
-      imwrite(im2uint8(output),fullfile(folderPaper, 'result_l0', filePaths(i).name));
-      PSNRs(i) = PSNRCur;
-      SSIMs(i) = SSIMCur;
+      imwrite(im2uint8(output),fullfile(folderPaper, 'result_wls', filePaths(i).name));
+      disp([time1, time2]);
+      %PSNRs(i) = PSNRCur;
+      %SSIMs(i) = SSIMCur;
   end
 
   disp([mean(PSNRs),mean(SSIMs)]);
