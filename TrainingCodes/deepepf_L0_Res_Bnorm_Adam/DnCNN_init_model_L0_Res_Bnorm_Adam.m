@@ -30,7 +30,8 @@ net.layers{end+1} = struct('type', 'conv', ...
     'opts',{{}}) ;
 net.layers{end+1} = struct('type', 'relu','leak',0) ;
 
-for i = 1:1:15
+%for i = 1:1:15
+for i = 1:1:7
 
     net.layers{end+1} = struct('type', 'conv', ...
         'weights', {{sqrt(2/(9*64))*randn(3,3,64,64,'single'), zeros(64,1,'single')}}, ...
