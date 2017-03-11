@@ -111,7 +111,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
           %pause(pauseTime)
           pause;
       end
-      imwrite(im2uint8(output),fullfile(folderPaper, 'result_blf', filePaths(i).name));
+      imwrite(im2uint8(output),fullfile(folderPaper, 'result_l0', filePaths(i).name));
       disp([time1, time2]);
       %PSNRs(i) = PSNRCur;
       %SSIMs(i) = SSIMCur;
