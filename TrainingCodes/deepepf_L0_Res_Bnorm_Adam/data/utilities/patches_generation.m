@@ -30,8 +30,8 @@ for i = 1 : length(filepaths)
   %image_label = L0Smoothing(image);
   image_path = fullfile(folder,filepaths(i).name);
   image = imread(image_path);
-  image_label = L0Smoothing(image_path);
-  %image_label = bfilter(image_path);
+  %image_label = L0Smoothing(image_path);
+  image_label = bfilter(image_path);
   %image_label = wls_run(image_path);
   if size(image, 3) == 3 && strcmp(color_model, 'gray') == 1
     image = rgb2gray(image); %uint8

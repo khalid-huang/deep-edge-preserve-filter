@@ -19,8 +19,8 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   folderPaper = fullfile('data','paper_relative');
   folderVal = fullfile(folderPaper, 'origin');
   showResult  = 1;
-  useGPU      = 1;
-  %useGPU      = 0;
+  %useGPU      = 1;
+  useGPU      = 0;
   pauseTime   = 1;
 
   %%model_shape is to use for the dir
@@ -71,10 +71,10 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       input = imread(fullfile(folderVal, filePaths(i).name));
       image_path = fullfile(folderVal, filePaths(i).name);
       tic;
-      %label = wls_run(image_path);
+      label = wls_run(image_path);
       %time1 = toc;
-      %label = bfilter(image_path);
-      label = L0Smoothing(image_path);
+      label = bfilter(image_path);
+      %label = L0Smoothing(image_path);
       %label = L0Smoothing(imread(fullfile(folderVal,filePaths(i).name)));
       time1 = toc;
       [~,nameCur,extCur] = fileparts(filePaths(i).name);
@@ -111,7 +111,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
           %pause(pauseTime)
           pause;
       end
-      imwrite(im2uint8(output),fullfile(folderPaper, 'result_blf', filePaths(i).name));
+      %imwrite(im2uint8(output),fullfile(folderPaper, 'result_blf', filePaths(i).name));
       disp([time1, time2]);
       %PSNRs(i) = PSNRCur;
       %SSIMs(i) = SSIMCur;
