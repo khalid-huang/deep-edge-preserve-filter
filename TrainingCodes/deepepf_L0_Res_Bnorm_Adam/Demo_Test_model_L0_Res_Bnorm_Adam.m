@@ -14,7 +14,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   addpath(fullfile('../../methods/L0'));
   addpath(fullfile('../../methods/tsmoothing'));
   addpath(fullfile('../../methods/wls'));
-  
+
   %folderTest  = fullfile('data','Test'); %%% test dataset
   folderPaper = fullfile('data','paper_relative');
   folderVal = fullfile(folderPaper, 'origin');
@@ -89,7 +89,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       if useGPU
           input = gpuArray(input);
       end
-      
+
       tic;
       res    = vl_simplenn(net,input,[],[],'conserveMemory',true,'mode','test');
       output = input - res(end).x;
