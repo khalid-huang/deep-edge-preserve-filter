@@ -18,20 +18,12 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   %for test
   %folderTest  = fullfile('data','Test'); %%% test dataset
   %for gen paper image
-  %folderPaper = fullfile('data','paper_relative');
-  %folderVal = fullfile(folderPaper, 'origin');
-
-  %for gen time info
-  method_arr = {'l0', 'wls', 'blf'};
-  method = char(method_arr(3)); %cell to str
-  dataset1 = 'qvga';
-
-  folderPaper = fullfile('data', 'time_dataset');
-  folderVal = fullfile(folderPaper, dataset1);
-  fp = fopen(fullfile(folderPaper, strcat('rsl_', dataset1), 'time.txt'), 'at+');
-  outDir = fullfile(folderPaper, strcat('rsl_', dataset1), method);
-  methods = strcat(method, '_5');
-
+  folderPaper = fullfile('data','paper_relative');
+  folderVal = fullfile(folderPaper, 'origin');
+  method = 'blf';
+  outDir = fullfile(folderPaper, 'result_blf_17');
+  
+  
   showResult  = 1;
   %useGPU      = 1;
   useGPU      = 0;
@@ -77,14 +69,6 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   %PSNRs = zeros(1,length(filePaths));
   %SSIMs = zeros(1,length(filePaths));
   
-  blanks = [32,32,32,32,32,32,32,32,32,32];
-  msg = methods;
-  fprintf(fp, '%s\n', msg);
-  msg = 'origin          ours';
-  fprintf(fp, '%s\n', msg);
-  %fprintf(fp, '\r\s');
-  t1 = 0;
-  t2 = 0;
   for i = 1:length(filePaths)
 
       %%% read images
@@ -93,16 +77,15 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       input = imread(fullfile(folderVal, filePaths(i).name));
       image_path = fullfile(folderVal, filePaths(i).name);
       tic;
-      if strcmp(methods,'wls_5')
+      if strcmp(method,'wls')
         label = wls_run(image_path);
-      elseif strcmp(methods, 'blf_5')
+      elseif strcmp(method, 'blf')
         label = bfilter(image_path);
       else
         label = L0Smoothing(image_path);
       end
         %label = L0Smoothing(imread(fullfile(folderVal,filePaths(i).name)));
       time1 = toc;
-      t1 = t1 + time1;
       
       [~,nameCur,extCur] = fileparts(filePaths(i).name);
       label = im2double(label);
@@ -121,11 +104,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       res    = vl_simplenn(net,input,[],[],'conserveMemory',true,'mode','test');
       output = input - res(end).x;
       time2 = toc;
-      t2 = t2 + time2;
-      
-      msg = strcat(num2str(time1), blanks, num2str(time2));
-      fprintf(fp, '%s\n', msg);
-      
+         
       %%% convert to CPU
       if useGPU
           output = gather(output);
@@ -148,18 +127,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       %PSNRs(i) = PSNRCur;
       %SSIMs(i) = SSIMCur;
   end
-  
-  num = length(filePaths);
-  t1 = t1 / num;
-  t2 = t2 / num;
-  disp([t1, t2]);
-  msg = 'average';
-  fprintf(fp, '%s\n', msg);
-  msg = strcat(num2str(t1), blanks, num2str(t2));
-  fprintf(fp, '%s\n', msg);
-  msg = '';
-  fprintf(fp, '%s\n\n\n', msg);
-  fclose(fp);
+
   %disp([mean(PSNRs),mean(SSIMs)]);
   epoch
 end
