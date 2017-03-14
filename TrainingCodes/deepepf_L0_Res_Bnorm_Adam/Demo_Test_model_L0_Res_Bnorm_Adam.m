@@ -21,8 +21,8 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   folderPaper = fullfile('data','paper_relative');
   folderVal = fullfile(folderPaper, 'origin');
   method = 'blf';
-  outDir = fullfile(folderPaper, 'result_blf_17');
-  
+  outDir = fullfile(folderPaper, 'result_blf_5');
+  model_post = '_BLF_5';
   
   showResult  = 1;
   %useGPU      = 1;
@@ -33,10 +33,10 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   if strcmp(color_model, 'gray')
     model_dir_shape = 'model_L0_Gray_Res_Bnorm_Adam';
   else
-    model_dir_shape = 'model_L0_Res_Bnorm_Adam';
+    model_dir_shape = strcat('model_L0_Res_Bnorm_Adam');
   end
 
-  modelDir  = fullfile('data',model_dir_shape);
+  modelDir  = fullfile('data',strcat(model_dir_shape, model_post));
   modelName   = model_dir_shape;
 
   epoch       = findLastEpoch(modelDir, modelName);
@@ -115,12 +115,12 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       [PSNRCur, SSIMCur] = Cal_PSNRSSIM(im2uint8(label),im2uint8(output),0,0);
       if showResult
           %imshow(im2uint8(output));
-          imshow(cat(2,im2uint8(label),im2uint8(input),im2uint8(output)));
+          %imshow(cat(2,im2uint8(label),im2uint8(input),im2uint8(output)));
           %title([filePaths(i).name,'    ',num2str(PSNRCur,'%2.2f'),'dB','    ',num2str(SSIMCur,'%2.4f')])
           %imshow(cat(2, im2uint8(input), im2uint8(output)))
           %drawnow;
           %pause(pauseTime)
-          pause;
+          %pause;
       end
       imwrite(im2uint8(output),fullfile(outDir, filePaths(i).name));
       disp([time1, time2]);
