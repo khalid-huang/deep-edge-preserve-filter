@@ -71,10 +71,9 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       input = imread(fullfile(folderVal, filePaths(i).name));
       image_path = fullfile(folderVal, filePaths(i).name);
       tic;
-      label = wls_run(image_path);
-      %time1 = toc;
-      label = bfilter(image_path);
-      %label = L0Smoothing(image_path);
+      %label = wls_run(image_path);
+      %label = bfilter(image_path);
+      label = L0Smoothing(image_path);
       %label = L0Smoothing(imread(fullfile(folderVal,filePaths(i).name)));
       time1 = toc;
       [~,nameCur,extCur] = fileparts(filePaths(i).name);
@@ -104,14 +103,14 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
       [PSNRCur, SSIMCur] = Cal_PSNRSSIM(im2uint8(label),im2uint8(output),0,0);
       if showResult
           %imshow(im2uint8(output));
-          imshow(cat(2,im2uint8(label),im2uint8(input),im2uint8(output)));
+          %imshow(cat(2,im2uint8(label),im2uint8(input),im2uint8(output)));
           %title([filePaths(i).name,'    ',num2str(PSNRCur,'%2.2f'),'dB','    ',num2str(SSIMCur,'%2.4f')])
           %imshow(cat(2, im2uint8(input), im2uint8(output)))
-          drawnow;
+          %drawnow;
           %pause(pauseTime)
-          pause;
+          %pause;
       end
-      %imwrite(im2uint8(output),fullfile(folderPaper, 'result_blf', filePaths(i).name));
+      imwrite(im2uint8(output),fullfile(folderPaper, 'result_l0_5', filePaths(i).name));
       disp([time1, time2]);
       %PSNRs(i) = PSNRCur;
       %SSIMs(i) = SSIMCur;
