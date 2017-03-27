@@ -6,7 +6,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   format compact;
 
   if nargin == 0
-    color_model = 'gray';
+    color_model = 'color';
   end
 
   addpath(fullfile('data','utilities'));
@@ -25,8 +25,8 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   model_post = '_WLS_5';
   
   showResult  = 1;
-  %useGPU      = 1;
-  useGPU      = 0;
+  useGPU      = 1;
+  %useGPU      = 0;
   pauseTime   = 1;
 
   %%model_shape is to use for the dir
@@ -40,24 +40,25 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   modelName   = model_dir_shape;
 
   epoch       = findLastEpoch(modelDir, modelName);
-  epoch
   %%% load Gaussian denoising model
   load(fullfile(modelDir,[modelName,'-epoch-',num2str(epoch),'.mat']));
+  disp('epoch');
   net = vl_simplenn_tidy(net);
+  disp('epoch12');
   net.layers = net.layers(1:end-1);
-
+  disp('epoch');
   %%%
   net = vl_simplenn_tidy(net);
 
   % for i = 1:size(net.layers,2)
   %     net.layers{i}.precious = 1;
   % end
-
+  disp('epoch1');
   %%% move to gpu
   if useGPU
       net = vl_simplenn_move(net, 'gpu') ;
   end
-
+  disp('epoch2');
   %%% read images
   ext         =  {'*.jpg','*.png','*.bmp'};
   filePaths   =  [];
@@ -70,7 +71,7 @@ function [] = Demo_Test_model_L0_Res_Bnorm_Adam(color_model)
   %SSIMs = zeros(1,length(filePaths));
   
   for i = 1:length(filePaths)
-
+      disp(i);
       %%% read images
       %image = imread(fullfile(folderTest,filePaths(i).name));
 

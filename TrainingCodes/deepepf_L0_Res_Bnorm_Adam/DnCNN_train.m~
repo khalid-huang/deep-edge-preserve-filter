@@ -121,7 +121,7 @@ end
 function  [net, state] = process_epoch(net, state, imdb, opts, mode)
 %%%-------------------------------------------------------------------------
 
-fp = fopen('epoch_error_WLS.txt', 'at+');
+fp = fopen('epoch_error.txt', 'at+');
 
 if strcmp(mode,'train')
 
@@ -200,7 +200,7 @@ for t=1:opts.batchSize:numel(subset)
     end
     %200 one time
     if strcmp(mode, 'train') && mod(fix((t-1)/opts.batchSize)+1,200) == 0
-        fprintf('done one %3d',fix((t-1)/opts.batchSize)+1);
+        disp('done one');
         fprintf(fp, 'epoch %02d-time %3d', state.epoch, fix((t-1)/opts.batchSize)+1);
         fprintf(fp, '  error: %f \n', lossL2);
     end

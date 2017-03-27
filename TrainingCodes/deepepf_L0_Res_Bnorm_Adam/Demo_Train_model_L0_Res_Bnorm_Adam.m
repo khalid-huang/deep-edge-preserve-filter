@@ -9,7 +9,7 @@ addpath(fullfile('../../methods/wls'));
 
 %%color_model: 'color' or 'gray'
 if nargin == 0
-  color_model = 'gray';
+  color_model = 'color';
 end
 
 %%model_shape is to use for the dir
@@ -26,7 +26,7 @@ end
 %%%-------------------------------------------------------------------------
 opts.modelName        = model_dir_shape; %%% model name
 %opts.learningRate    = [logspace(-3,-3,30) logspace(-4,-4,20)];%%% you can change the learning rate
-opts.learningRate     = [logspace(-3,-3,3) logspace(-4,-4,10) logspace(-4,-4,10)];
+opts.learningRate     = [logspace(-3,-3,5) logspace(-4,-4,5)];
 %opts.learningRate = [logspace(-3,-3,2)];
 opts.batchSize        = 128; %%% default
 %opts.batchSize       = 64;

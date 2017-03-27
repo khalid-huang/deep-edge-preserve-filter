@@ -1,0 +1,110 @@
+
+
+
+with BN technology 
+start error: 20.792715 
+epoch 01-time 200  error: 1.753799 
+epoch 01-time 400  error: 1.396459 
+epoch 01-time 600  error: 1.362314 
+epoch 01-time 800  error: 1.516347 
+epoch 01-time 1000  error: 1.330780 
+epoch 02-time 200  error: 1.315357 
+epoch 02-time 400  error: 1.343179 
+epoch 02-time 600  error: 1.610366 
+epoch 02-time 800  error: 1.373687 
+epoch 02-time 1000  error: 1.227168 
+epoch 03-time 200  error: 1.558144 
+epoch 03-time 400  error: 1.152720 
+epoch 03-time 600  error: 1.379474 
+epoch 03-time 800  error: 1.320887 
+epoch 03-time 1000  error: 1.123688 
+epoch 04-time 200  error: 1.306744 
+epoch 04-time 400  error: 1.156694 
+epoch 04-time 600  error: 1.254401 
+epoch 04-time 800  error: 1.183605 
+epoch 04-time 1000  error: 1.225844 
+epoch 05-time 200  error: 1.252206 
+epoch 05-time 400  error: 1.243707 
+epoch 05-time 600  error: 1.153205 
+epoch 05-time 800  error: 1.147767 
+epoch 05-time 1000  error: 1.349736 
+epoch 06-time 200  error: 1.179049 
+epoch 06-time 400  error: 1.141972 
+epoch 06-time 600  error: 1.192084 
+epoch 06-time 800  error: 1.053446 
+epoch 06-time 1000  error: 1.219114 
+epoch 07-time 200  error: 1.202582 
+epoch 07-time 400  error: 1.180253 
+epoch 07-time 600  error: 1.124587 
+epoch 07-time 800  error: 1.138099 
+epoch 07-time 1000  error: 1.241849 
+epoch 08-time 200  error: 1.051303 
+epoch 08-time 400  error: 1.269013 
+epoch 08-time 600  error: 1.147854 
+epoch 08-time 800  error: 1.157985 
+epoch 08-time 1000  error: 1.243967 
+epoch 09-time 200  error: 1.140452 
+epoch 09-time 400  error: 1.106368 
+epoch 09-time 600  error: 1.209677 
+epoch 09-time 800  error: 1.004559 
+epoch 09-time 1000  error: 1.115301 
+epoch 10-time 200  error: 1.169284 
+epoch 10-time 400  error: 1.016974 
+epoch 10-time 600  error: 1.123065 
+epoch 10-time 800  error: 1.227227 
+epoch 10-time 1000  error: 1.203668 
+
+
+
+without BN technology 
+start error: 24.556067 
+epoch 01-time 200  error: 1.916967 
+epoch 01-time 400  error: 1.779816 
+epoch 01-time 600  error: 1.555267 
+epoch 01-time 800  error: 1.356321 
+epoch 01-time 1000  error: 1.454069 
+epoch 02-time 200  error: 1.563004 
+epoch 02-time 400  error: 1.371412 
+epoch 02-time 600  error: 1.300871 
+epoch 02-time 800  error: 1.349875 
+epoch 02-time 1000  error: 1.558177 
+epoch 03-time 200  error: 1.289371 
+epoch 03-time 400  error: 1.387052 
+epoch 03-time 600  error: 1.211721 
+epoch 03-time 800  error: 1.457550 
+epoch 03-time 1000  error: 1.414911 
+epoch 04-time 200  error: 1.362790 
+epoch 04-time 400  error: 1.231739 
+epoch 04-time 600  error: 1.260514 
+epoch 04-time 800  error: 1.212232 
+epoch 04-time 1000  error: 1.397376 
+epoch 05-time 200  error: 1.375070 
+epoch 05-time 400  error: 1.242901 
+epoch 05-time 600  error: 1.444682 
+epoch 05-time 800  error: 1.356433 
+epoch 05-time 1000  error: 1.259149 
+epoch 06-time 200  error: 1.205654 
+epoch 06-time 400  error: 1.332504 
+epoch 06-time 600  error: 1.177121 
+epoch 06-time 800  error: 1.117494 
+epoch 06-time 1000  error: 1.267648 
+epoch 07-time 200  error: 1.217002 
+epoch 07-time 400  error: 1.248575 
+epoch 07-time 600  error: 1.305232 
+epoch 07-time 800  error: 1.228296 
+epoch 07-time 1000  error: 1.131940 
+epoch 08-time 200  error: 1.130423 
+epoch 08-time 400  error: 1.018425 
+epoch 08-time 600  error: 1.182810 
+epoch 08-time 800  error: 1.460619 
+epoch 08-time 1000  error: 0.947202 
+epoch 09-time 200  error: 1.102147 
+epoch 09-time 400  error: 1.354123 
+epoch 09-time 600  error: 1.358284 
+epoch 09-time 800  error: 1.276489 
+epoch 09-time 1000  error: 1.081327 
+epoch 10-time 200  error: 1.086495 
+epoch 10-time 400  error: 1.163422 
+epoch 10-time 600  error: 1.236743 
+epoch 10-time 800  error: 1.091907 
+epoch 10-time 1000  error: 1.024372 
