@@ -1,4 +1,5 @@
 # 目录说明
+```
 data                       ：训练原始数据
   | -- BSDS500             : BSDS500数据集
   | -- test_paper          : 补充数据集
@@ -16,6 +17,8 @@ TrainingCodes              : 网络的训练代码
   | -- Demo_Test_model_L0_Res_Bnorm_Adam.m              :测试模型
   | -- DnCNN_init_model_L0_Res_Bnorm_Adam.m             :模型初始化
   | -- DnCNN_train.m                                    :模型训练的核心代码
+```
+
 # 程序运行
 > 如下的操作都是在/TrainingCodes/deepepf_L0_Res_Bnorm_Adam目录下,环境都是matlab;
 
